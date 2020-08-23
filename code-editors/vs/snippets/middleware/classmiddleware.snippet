@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>SnippetFile1</Title>
+      <Author>
+      </Author>
+      <Description>
+      </Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>classmiddleware</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>MiddlewareName</ID>
+          <ToolTip>Name + Middleware</ToolTip>
+          <Default>SaludoMiddleware</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Delimiter="$"><![CDATA[public class $MiddlewareName$
+    {
+        private readonly RequestDelegate _next;
+        private readonly ILogger<$MiddlewareName$> _logger;
+
+        public $MiddlewareName$(RequestDelegate next, ILogger<$MiddlewareName$> _logger)
+        {
+            this._next = next;
+            this._logger = _logger;
+        }
+
+        public async Task Invoke(HttpContext context)
+        {
+            //code dealing with the request
+            this._logger.LogInformation("Work with request");
+            await context.Response.WriteAsync("Hey");
+
+            await this._next(context);
+
+            //code dealing with the response
+            this._logger.LogInformation("Work with response");
+        }
+    }
+
+    public static class SaludoMiddlewareExtension
+    {
+        public static IApplicationBuilder UseSaludo(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<$MiddlewareName$>();
+        }
+    }
+    //In Startup.cs/Configure call it:   app.UseSaludo();]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

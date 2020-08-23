@@ -1,0 +1,3 @@
+snippets
+snippet creator (by Ryan Olson) 
+C:\Users\<yourUserName>\AppData\Roaming\Code\User\snippets

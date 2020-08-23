@@ -1,0 +1,6 @@
+Visual Studio Market Place  / Snippet Designer
+C:\Users\<yourUserName>\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets 
+
+Middleware
+-----------
+classmiddleware		un costume middleware con extension-method
