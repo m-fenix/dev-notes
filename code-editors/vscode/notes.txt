@@ -1,0 +1,22 @@
+--nombre extension
+snippet creator - by Ryan Olson
+
+--folder location
+C:\Users\alan\AppData\Roaming\Code\User\snippets
+
+--crear snippet
+1. estar en un archivo con la extension del codigo que quieres agregar como snippet
+2. seleccionar el codigo que quieres agregar como snippet y click-derecho/command-palette
+3. escribir "create snippet"
+4. elegir el nombre que le quieres dar a tu snippet, yo uso el formato "alan.nombre"
+5. agregar una pequeña descripcion de tu snippet
+6. listo, ahora ya cada vez que escribas tu snippet se agregara
+
+
+
+
+***************		snippets available		***************
+alanHtml
+
+alanIifeFn
+alanIifeArrowFn

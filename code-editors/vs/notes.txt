@@ -1,6 +1,20 @@
-Visual Studio Market Place  / Snippet Designer
-C:\Users\<yourUserName>\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets 
+--nombre extension
+snippet designer - by matthew manela
+https://marketplace.visualstudio.com/items?itemName=vs-publisher-2795.SnippetDesigner
 
-Middleware
------------
-classmiddleware		un costume middleware con extension-method
+--folder location
+C:\Users\alan\Documents\Visual Studio 2019\Code Snippets\Visual C#\My Code Snippets 
+
+--crear snippet
+1. seleccionar el codigo que quieres agregar como snippet y click-derecho/export-as-snippet
+2. Aparecera todo tu codigo en una pantalla nueva, agregar el shortcut como mandaras llamar el snippet
+3. seleccionar el nombre del shortcut que pusiste y darle copy
+4. darle a guardar el snippet
+5. en la pantalla de donde quieras guardar el snippet borra el nombre default y ponle el mismo nombre que usaste para el shortcut
+6. listo, ya puedes usar tu snippet
+
+
+*************     snippets available		*************
+alanClassMiddleware
+alanRunMiddleware
+alanUseMiddleware
