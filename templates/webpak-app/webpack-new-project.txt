@@ -1,0 +1,174 @@
+***structure***
+//Esto es solo para que sepas los pasos de como fui instalando cada cosa para crear el proyecto, aqui cuando instalas los modulos se trae la version mas nueva de cada uno asi que si ya paso tiempo puede que uno modulo ya no sea compatible con algun otro... ya tienes que checar compatibilidad paso por paso, pero si no quieres batallar agarra el proyecto con la estrucutra vacia y ahi en el package.json ya trae los modulos que necesitas con sus versiones especificas.
+
+
+public/template.html   src/index.js  src/App.js  src/app.css  src/assets/sot.jpg
+npm init -y     //crea package.json
+git init        //crea .git/
+
+***bundler***
+npm install --save-dev webpack webpack-cli
+	--update package.json/scripts
+	"build-dev": "webpack --mode development",
+    "build-prod": "webpack --mode production"
+webpack.config.js
+npm run build-dev
+
+***borrar dist/ al hacer un build***
+npm install --save-dev clean-webpack-plugin 
+--update webpack.config.js
+
+*** crear index.html in dist/ con referencia a js, y basado en template.html  ***
+npm install --save-dev html-webpack-plugin 
+--update webpack.config.js
+
+*** cambiar src de imagenes en dist/index.html por require/import ***
+*** en codigo js y copiar las imagenes en dist/ ***
+npm install --save-dev html-loader file-loader
+--update webpack.config.js
+
+*** leer css y inyectarlo a html/head/style ***
+npm install --save-dev style-loader css-loader 
+--update webpack.config.js
+
+*** agregar babel para transformar es6 a es5 ***
+npm install --save-dev @babel/core @babel/preset-env babel-loader  
+--update webpack.config.js
+
+*** crear server para carpeta dist/ virtual ***
+npm install --save-dev webpack-dev-server 
+--update package.json/scripts
+  "server-dev-in-memory": "webpack-dev-server --mode development"
+  
+*** crear server para carpeta dist/ fisica ***
+npm install --save-dev http-server
+--update package.json/scripts
+  "server-dev": "http-server ./dist"
+
+*** build-dev / build-prod ***
+npm run build-dev
+npm run build-prod
+
+*** correr server/cerrar server ***
+npm run server-dev-in-memory
+npm run server-dev
+ctrl c
+y
+
+
+*** agregar css que usa js a html dentro de style tag ***
+npm install --save-dev style-loader css-loader
+
+
+*** template.html ***
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<div id="root"></div>
+    <img src="../src/assets/sot.jpg" alt="Sea of Thieves" />
+</body>
+</html>
+
+
+
+*** app.css ***
+.colorRojo{
+    color: red;
+}
+
+
+*** App.js ***
+const saludo = () => "hola mundito";
+
+export {saludo};
+
+
+
+
+
+*** index.js ***
+import {saludo} from "./App.js";
+import "./app.css";
+
+//agregar estilo a div de html con app.css
+var div = document.getElementById("root");
+var t = document.createTextNode("Hello World");
+div.setAttribute("class", "colorRojo");
+div.appendChild(t);
+
+
+alert(saludo());
+
+
+
+
+***  webpack.config.js  ***
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js", //1
+  output: {
+    //2
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.[contenthash].js",
+  },
+  plugins: [
+    new CleanWebpackPlugin(), //3
+    new HtmlWebpackPlugin({
+      //4
+      template: "./public/template.html",
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        //5
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
+      {
+        //6
+        test: /\.(svg|png|jpe?g|gif)$/i,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[name].[hash].[ext]",
+            outputPath: "assets/images",
+          },
+        },
+      },
+      {
+        //7
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      { //8
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
+    ],
+  },
+};
+
+//1 modulo de entrada que manda llamar a todo lo demas (.js, .css, etc)
+//2 da nombre de archivo bundle que se creara en dist/ y agrega hash para cache
+//3 borra todo del folder dist/ cada que se haga un build
+//4 crea un index.html en dist/ haciendo referencia al index.js con cache y usa como template "template.html"
+//5 html-loader cambia los src en index.html por import/require de cada imagen y lo agrega al codigo javascript
+//6 lee los import/require que hizo html-loader y manda esas imagenes a dist/, se le configura a esas imagenes nombre con hash y ubicacion donde se crearan
+//7 css-loader lee todo el css y style-loader lo pone en el html dentro de style tags
+//8 se necesita babel para transformar es6 a es5, preset-env ayuda en definir a que browsers quieres que js sea compatible(por default 
+//  es hasta los mas viejitos)

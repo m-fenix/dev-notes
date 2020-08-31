@@ -1,0 +1,12 @@
+npm install --save-dev --save-prod
+npm run build-dev
+npm run server-dev-in-memory  		//dist in memory  	//ctrl c  (Y)
+npm run server-dev  				//dist physical		//ctrl c
+http://localhost:8080/index.html
+
+
+
+--Si no quieres batallar puedes usar el que ya te crea todo:
+npm install -g create-react-app
+npm run build
+npm run start

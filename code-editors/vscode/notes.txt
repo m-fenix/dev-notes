@@ -16,7 +16,7 @@ C:\Users\alan\AppData\Roaming\Code\User\snippets
 
 
 ***************		snippets available		***************
-alanHtml
+alanHtmlTestJs
 
 alanIifeFn
 alanIifeArrowFn
